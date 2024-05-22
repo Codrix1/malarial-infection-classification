@@ -6,7 +6,8 @@ from keras.models import load_model
 
 # Load your pre-trained model (replace with your model's path)
 model = load_model('CNN_scratch.h5')
-# model2 = load_model('MobileNet.h5')
+model2 = load_model('model.h5')
+model3 = load_model('MobileNet.h5')
 
 
 # Define a function to preprocess the image as required by your model
@@ -37,10 +38,13 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image.', use_column_width=True)
 
     # Predict and display the result
-    st.write("Classifying...")
+    st.write("Classifiers output:")
     prediction = predict(image, model)
-    # prediction2 = predict(image, model2)
+    prediction2 = predict(image, model2)
+    prediction3 = predict(image, model3)
     print(prediction)
+    print(prediction2)
+    print(prediction3)
 
     # Assuming the model returns a class index, you might need to map it to class names
     class_name = ""
@@ -49,9 +53,14 @@ if uploaded_file is not None:
     else:
         class_name = "Uninfected"
 
-    st.write(f"CNN Prediction: {class_name}")
-    # if prediction2[0] > 0.5:
-    #     class_name = "Parasitized"
-    # else:
-    #     class_name = "Uninfected"
-    # st.write(f"Mobile Net Prediction: {class_name}")
+    st.write(f"CNN Prediction: {prediction}, {class_name}")
+    if prediction2[0] > 0.5:
+        class_name = "Parasitized"
+    else:
+        class_name = "Uninfected"
+    st.write(f"Mobile Net Prediction: {prediction2}, {class_name}")
+    if prediction3[0] > 0.5:
+        class_name = "Parasitized"
+    else:
+        class_name = "Uninfected"
+    st.write(f"Mobile Net 2 Prediction: {prediction}, {class_name}")
