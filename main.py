@@ -7,7 +7,12 @@ from keras.models import load_model
 # Load your pre-trained model (replace with your model's path)
 model = load_model('CNN_scratch.h5')
 model2 = load_model('model.h5')
-model3 = load_model('MobileNet.h5')
+model3 = load_model('CNN_Dense_NN.h5')
+
+
+def compute_metrics(predict):
+    score = abs(predict - 0.5) * 100
+    return round(score[0][0] * 2, 2)
 
 
 # Define a function to preprocess the image as required by your model
@@ -53,14 +58,14 @@ if uploaded_file is not None:
     else:
         class_name = "Uninfected"
 
-    st.write(f"CNN Prediction: {prediction}, {class_name}")
+    st.write(f"CNN Prediction: {compute_metrics(prediction)}, {class_name}")
     if prediction2[0] > 0.5:
         class_name = "Parasitized"
     else:
         class_name = "Uninfected"
-    st.write(f"Mobile Net Prediction: {prediction2}, {class_name}")
+    st.write(f"Mobile Net Prediction: {compute_metrics(prediction2)}, {class_name}")
     if prediction3[0] > 0.5:
         class_name = "Parasitized"
     else:
         class_name = "Uninfected"
-    st.write(f"Mobile Net 2 Prediction: {prediction}, {class_name}")
+    st.write(f"CNN Dense Prediction: {compute_metrics(prediction3)}, {class_name}")
